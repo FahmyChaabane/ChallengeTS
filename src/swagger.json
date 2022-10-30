@@ -1,0 +1,232 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Interview Livello Nodejs App",
+    "description": "This is a documentation of Entities and Routes",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:4000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for users in the system"
+    },
+    {
+      "name": "Hobbies",
+      "description": "API for hobbies in the system"
+    }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/user": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Returns a list of users",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Add a user",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad data."
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Returns a user by its Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad data."
+          },
+          "404": {
+            "description": "Failed. Data not found."
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Remove a user by its Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad data."
+          },
+          "404": {
+            "description": "Failed. Data not found."
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Add a hobby to a user by its Id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User ID",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "hobby",
+            "in": "body",
+            "description": "Hobby body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "year": {
+                  "type": "integer"
+                },
+                "passionLevel": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad data."
+          },
+          "404": {
+            "description": "Failed. Data not found."
+          }
+        }
+      }
+    },
+    "/hobby/{hobbyId}/{userId}": {
+      "delete": {
+        "tags": ["Hobbies"],
+        "summary": "Remove a hobby from a user",
+        "parameters": [
+          {
+            "name": "hobbyId",
+            "in": "path",
+            "description": "Hobby ID",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "User ID",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Failed. Bad data."
+          },
+          "404": {
+            "description": "Failed. Data not found."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "hobbies": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/Hobby"
+          }
+        }
+      }
+    },
+    "Hobby": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
